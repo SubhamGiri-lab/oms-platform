@@ -1,0 +1,119 @@
+# Environment variables
+.env
+.env.local
+.env.*.local
+.env.example
+
+# Node modules
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+pnpm-debug.log
+
+# Build outputs
+dist/
+build/
+out/
+.next/
+.nuxt/
+.vuepress/dist/
+.serverless/
+.fusebox/
+.dynamodb/
+.cache/
+.vuepress/dist
+
+# Local workspace clones / temporary artifacts
+frontend.worktrees/
+frontend/test-results/
+
+# IDE and Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.sublime-project
+*.sublime-workspace
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# Testing
+coverage/
+.nyc_output/
+*.lcov
+
+# Production
+build/
+dist/
+
+# Misc
+.cache/
+.env.*.backup
+*.backup
+*.swp
+.turbo/
+
+# Docker
+.dockerignore
+docker-compose.override.yml
+
+# Database
+*.sql
+backup-*.sql
+pg_dump*.sql
+
+# Certificates
+*.pem
+*.key
+*.crt
+
+# Public files (if using file uploads)
+public/uploads/
+uploads/
+
+# Dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# Testing
+/coverage
+
+# Production
+/build
+/dist
+/.next
+/out
+
+# Misc
+.DS_Store
+*.pem
+
+# Debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Local env files
+.env.local
+.env.*.local
