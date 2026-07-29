@@ -1,0 +1,308 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* Custom Design System */
+:root {
+  /* Primary Colors */
+  --color-primary: 59, 130, 246; /* Blue */
+  --color-primary-dark: 37, 99, 235;
+  --color-primary-light: 96, 165, 250;
+  
+  /* Semantic Colors */
+  --color-success: 34, 197, 94; /* Green */
+  --color-warning: 251, 146, 60; /* Orange */
+  --color-error: 239, 68, 68; /* Red */
+  --color-info: 14, 165, 233; /* Cyan */
+  
+  /* Neutral */
+  --color-text: 15, 23, 42; /* Slate 900 */
+  --color-text-secondary: 71, 85, 105; /* Slate 600 */
+  --color-bg: 248, 250, 252; /* Slate 50 */
+  --color-border: 226, 232, 240; /* Slate 200 */
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-slate-50 text-slate-900 antialiased transition-colors duration-200;
+  font-feature-settings: "rlig" 1, "calt" 1;
+  background-image: radial-gradient(circle at top left, rgba(59, 130, 246, 0.12), transparent 28%), radial-gradient(circle at top right, rgba(14, 165, 233, 0.08), transparent 24%);
+}
+
+html.dark body {
+  @apply bg-slate-950 text-slate-100;
+  background-image: radial-gradient(circle at top left, rgba(59, 130, 246, 0.16), transparent 24%), radial-gradient(circle at top right, rgba(16, 185, 129, 0.12), transparent 20%);
+}
+
+html.dark .card {
+  @apply bg-slate-800 border-slate-700 shadow-slate-950/30;
+}
+
+html.dark .card-header,
+html.dark .card-footer {
+  @apply border-slate-700 bg-slate-900;
+}
+
+html.dark .input,
+html.dark .select,
+html.dark .textarea {
+  @apply bg-slate-800 border-slate-600 text-slate-100 placeholder-slate-400;
+}
+
+html.dark .table th {
+  @apply bg-slate-800 text-slate-200 border-slate-700;
+}
+
+html.dark .table td {
+  @apply border-slate-700;
+}
+
+html.dark .table tbody tr:hover {
+  @apply bg-slate-800/80;
+}
+
+html.dark .text-slate-900 {
+  @apply text-slate-100;
+}
+
+html.dark .text-slate-800 {
+  @apply text-slate-100;
+}
+
+html.dark .text-slate-700 {
+  @apply text-slate-300;
+}
+
+html.dark .text-slate-600 {
+  @apply text-slate-400;
+}
+
+html.dark .text-slate-500 {
+  @apply text-slate-400;
+}
+
+html.dark .bg-white {
+  @apply bg-slate-900;
+}
+
+html.dark .bg-slate-50 {
+  @apply bg-slate-950;
+}
+
+html.dark .bg-slate-100 {
+  @apply bg-slate-800;
+}
+
+html.dark .border-slate-200 {
+  @apply border-slate-700;
+}
+
+html.dark .shadow-slate-900\/5 {
+  @apply shadow-xl;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  @apply font-semibold tracking-tight;
+}
+
+h1 {
+  @apply text-3xl md:text-4xl;
+}
+
+h2 {
+  @apply text-2xl md:text-3xl;
+}
+
+h3 {
+  @apply text-xl md:text-2xl;
+}
+
+/* Custom Components */
+.card {
+  @apply bg-white/90 rounded-2xl border border-slate-200/80 shadow-sm shadow-slate-900/5 hover:-translate-y-0.5 hover:shadow-lg transition-all duration-200 backdrop-blur-sm;
+}
+
+.card-header {
+  @apply px-6 py-4 border-b border-slate-200;
+}
+
+.card-body {
+  @apply px-6 py-4;
+}
+
+.card-footer {
+  @apply px-6 py-4 bg-slate-50 border-t border-slate-200;
+}
+
+/* Buttons */
+.btn {
+  @apply px-4 py-2 rounded-lg font-medium transition-all duration-200 cursor-pointer;
+}
+
+.btn-primary {
+  @apply bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-sm hover:from-blue-700 hover:to-blue-600 disabled:bg-slate-400 disabled:cursor-not-allowed;
+}
+
+.btn-secondary {
+  @apply bg-slate-200 text-slate-900 hover:bg-slate-300 disabled:bg-slate-100 disabled:cursor-not-allowed;
+}
+
+.btn-outline {
+  @apply border-2 border-blue-600 text-blue-600 hover:bg-blue-50 disabled:border-slate-400 disabled:text-slate-400 disabled:cursor-not-allowed;
+}
+
+.btn-ghost {
+  @apply text-slate-600 hover:bg-slate-100 disabled:text-slate-400 disabled:cursor-not-allowed;
+}
+
+.btn-sm {
+  @apply px-3 py-1 text-sm;
+}
+
+.btn-lg {
+  @apply px-6 py-3 text-lg;
+}
+
+/* Forms */
+.input, .select, .textarea {
+  @apply w-full px-4 py-2.5 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all;
+}
+
+.input:disabled, .select:disabled, .textarea:disabled {
+  @apply bg-slate-100 cursor-not-allowed;
+}
+
+.label {
+  @apply block text-sm font-medium text-slate-700 mb-2;
+}
+
+/* Status badges */
+.badge {
+  @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium;
+}
+
+.badge-success {
+  @apply bg-green-100 text-green-800;
+}
+
+.badge-warning {
+  @apply bg-orange-100 text-orange-800;
+}
+
+.badge-error {
+  @apply bg-red-100 text-red-800;
+}
+
+.badge-info {
+  @apply bg-blue-100 text-blue-800;
+}
+
+.badge-neutral {
+  @apply bg-slate-100 text-slate-800;
+}
+
+/* Tables */
+.table {
+  @apply w-full border-collapse;
+}
+
+.table th {
+  @apply bg-slate-100 px-4 py-3 text-left text-sm font-semibold text-slate-700 border-b border-slate-200;
+}
+
+.table td {
+  @apply px-4 py-3 border-b border-slate-200;
+}
+
+.table tbody tr:hover {
+  @apply bg-slate-50;
+}
+
+/* Animations */
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-slide-in {
+  animation: slideIn 0.3s ease-out;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  h1 {
+    @apply text-2xl;
+  }
+  
+  h2 {
+    @apply text-xl;
+  }
+  
+  h3 {
+    @apply text-lg;
+  }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Utility classes */
+.truncate-text {
+  @apply truncate;
+}
+
+.gradient-text {
+  @apply bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent;
+}
+
+.shadow-sm {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.shadow-md {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.shadow-lg {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
