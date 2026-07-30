@@ -8,6 +8,14 @@
     "ecmaVersion": 12,
     "sourceType": "script"
   },
+  "overrides": [
+    {
+      "files": ["**/__tests__/**", "**/*.test.js", "**/*.spec.js"],
+      "env": {
+        "jest": true
+      }
+    }
+  ],
   "rules": {
     "no-unused-vars": ["warn"],
     "no-console": ["off"]

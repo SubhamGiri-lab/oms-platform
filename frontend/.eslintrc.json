@@ -1,0 +1,12 @@
+{
+  "extends": ["next/core-web-vitals", "eslint:recommended"],
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "rules": {
+    "react/no-unescaped-entities": "off",
+    "no-unused-vars": "warn",
+    "react-hooks/exhaustive-deps": "warn"
+  }
+}
