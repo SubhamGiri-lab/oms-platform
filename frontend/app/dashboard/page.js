@@ -9,11 +9,9 @@ import {
 } from 'lucide-react';
 import MetricCard from '../components/MetricCard';
 import SalesChart from '../components/SalesChart';
-import RecentOrders from '../components/RecentOrders';
 import api from '../../lib/api';
 import { formatCurrency, formatCompactNumber } from '../../lib/dashboardUtils';
 import { useAuth } from '../context/AuthContext';
-import Skeleton from '../components/Skeleton';
 import RoleDashboard from '../components/role/RoleDashboard';
 
 export default function Dashboard() {

@@ -6,7 +6,7 @@ import { useAuth } from '../context/AuthContext';
 import { useNotification } from '../context/NotificationContext';
 
 export default function ProfilePage() {
-  const { user, updateUser } = useAuth();
+  const { updateUser } = useAuth();
   const { success, error } = useNotification();
   const [values, setValues] = useState({
     name: '',

@@ -42,7 +42,7 @@ export default function Header() {
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <div>
           <h2 className="text-lg font-semibold tracking-tight text-slate-900 dark:text-slate-100 sm:text-2xl">Welcome back</h2>
-          <p className="text-sm text-slate-500 dark:text-slate-400">Here's what's happening today</p>
+          <p className="text-sm text-slate-500 dark:text-slate-400">Here&apos;s what&apos;s happening today</p>
         </div>
 
         <div className="flex items-center gap-2 sm:gap-4">
