@@ -1,0 +1,140 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: oms
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: oms-secrets
+  namespace: oms
+stringData:
+  DATABASE_URL: postgresql://postgres:postgres@oms-postgres:5432/oms_db
+  JWT_SECRET: your-super-secret-jwt-key
+  AZURE_AD_TENANT_ID: your-azure-tenant-id
+  AZURE_AD_CLIENT_ID: your-azure-client-id
+  APP_INSIGHTS_CONNECTION_STRING: your-application-insights-connection-string
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oms-postgres
+  namespace: oms
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: oms-postgres
+  template:
+    metadata:
+      labels:
+        app: oms-postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:15-alpine
+          env:
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: postgres
+            - name: POSTGRES_DB
+              value: oms_db
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: postgres-data
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: postgres-data
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: oms-postgres
+  namespace: oms
+spec:
+  type: ClusterIP
+  selector:
+    app: oms-postgres
+  ports:
+    - port: 5432
+      targetPort: 5432
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oms-backend
+  namespace: oms
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: oms-backend
+  template:
+    metadata:
+      labels:
+        app: oms-backend
+    spec:
+      containers:
+        - name: oms-backend
+          image: yourregistry.azurecr.io/oms-backend:latest
+          envFrom:
+            - secretRef:
+                name: oms-secrets
+          env:
+            - name: FRONTEND_URL
+              value: https://your-frontend.example.com
+          ports:
+            - containerPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: oms-backend
+  namespace: oms
+spec:
+  type: ClusterIP
+  selector:
+    app: oms-backend
+  ports:
+    - port: 5000
+      targetPort: 5000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oms-frontend
+  namespace: oms
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: oms-frontend
+  template:
+    metadata:
+      labels:
+        app: oms-frontend
+    spec:
+      containers:
+        - name: oms-frontend
+          image: yourregistry.azurecr.io/oms-frontend:latest
+          env:
+            - name: NEXT_PUBLIC_API_URL
+              value: https://your-backend.example.com
+          ports:
+            - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: oms-frontend
+  namespace: oms
+spec:
+  type: LoadBalancer
+  selector:
+    app: oms-frontend
+  ports:
+    - port: 80
+      targetPort: 3000

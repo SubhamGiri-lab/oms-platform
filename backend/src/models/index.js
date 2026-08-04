@@ -3,20 +3,34 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-const databaseUrl = process.env.DATABASE_URL || (process.env.NODE_ENV === 'test' ? 'sqlite::memory:' : 'sqlite:./oms.db');
-const isSqlite = databaseUrl.startsWith('sqlite');
+const isTest = process.env.NODE_ENV === 'test';
+const databaseUrl = isTest ? undefined : process.env.DATABASE_URL?.trim();
+const isSqlite = !databaseUrl || databaseUrl.startsWith('sqlite');
 
-const sequelize = new Sequelize(databaseUrl, {
+const sequelizeOptions = {
   dialect: isSqlite ? 'sqlite' : 'postgres',
-  storage: isSqlite ? (process.env.NODE_ENV === 'test' ? ':memory:' : 'oms.db') : undefined,
   logging: process.env.NODE_ENV === 'development' ? console.log : false,
-  pool: isSqlite ? undefined : {
-    max: 5,
-    min: 0,
-    acquire: 30000,
-    idle: 10000
+  pool: isSqlite
+    ? undefined
+    : {
+        max: 5,
+        min: 0,
+        acquire: 30000,
+        idle: 10000
+      }
+};
+
+if (isSqlite) {
+  if (databaseUrl && databaseUrl.startsWith('sqlite:')) {
+    sequelizeOptions.storage = databaseUrl.replace(/^sqlite:/, '') || ':memory:';
+  } else {
+    sequelizeOptions.storage = isTest ? ':memory:' : 'oms.db';
   }
-});
+}
+
+const sequelize = databaseUrl && !isTest
+  ? new Sequelize(databaseUrl, sequelizeOptions)
+  : new Sequelize(sequelizeOptions);
 
 // User Model
 const User = sequelize.define('User', {

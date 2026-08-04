@@ -1,5 +1,4 @@
 {
-  "name": "oms-backend",
   "version": "1.0.0",
   "description": "Order Management System Backend API",
   "main": "src/app.js",
@@ -18,20 +17,31 @@
     "dotenv": "^17.4.2",
     "express": "^4.18.2",
     "helmet": "^7.2.0",
+    "jwks-rsa": "^2.0.5",
     "jsonwebtoken": "^9.0.0",
     "morgan": "^1.10.0",
     "pg": "^8.10.0",
     "pg-hstore": "^2.3.4",
-    "sequelize": "^6.32.1",
+    "sequelize": "^6.37.8",
     "socket.io": "^4.6.1",
     "sqlite3": "^6.0.1",
-    "uuid": "^14.0.1"
+    "swagger-jsdoc": "^6.3.0",
+    "swagger-ui-express": "^5.0.1",
+    "uuid": "^11.1.1"
   },
   "devDependencies": {
     "eslint": "^8.57.1",
     "jest": "^29.7.0",
     "nodemon": "^3.1.14",
     "supertest": "^7.0.4"
+  },
+  "overrides": {
+    "sequelize": {
+      "uuid": "^11.1.1"
+    },
+    "minimatch": {
+      "brace-expansion": "^1.1.18"
+    }
   },
   "engines": {
     "node": ">=16.0.0"

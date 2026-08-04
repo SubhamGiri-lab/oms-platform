@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import api from '../../../lib/api';
 import { useNotification } from '../../context/NotificationContext';
@@ -14,7 +14,7 @@ export default function OrderDetailPage({ params }) {
   const [statusUpdating, setStatusUpdating] = useState(false);
   const [paymentUpdating, setPaymentUpdating] = useState(false);
 
-  const loadOrder = async () => {
+  const loadOrder = useCallback(async () => {
     setLoading(true);
     setError('');
 
@@ -26,11 +26,11 @@ export default function OrderDetailPage({ params }) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [orderId]);
 
   useEffect(() => {
     loadOrder();
-  }, [orderId]);
+  }, [loadOrder]);
 
   const orderTotals = useMemo(() => {
     const subtotal = Number(order?.subtotal || 0);

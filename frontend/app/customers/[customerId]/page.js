@@ -117,7 +117,7 @@ export default function CustomerDetailPage({ params }) {
         <div className="card">
           <div className="card-body space-y-4">
             <h2 className="text-xl font-semibold text-slate-900">Action</h2>
-            <p className="text-slate-600">Use this page to view or edit the customer's details and contact history.</p>
+            <p className="text-slate-600">Use this page to view or edit the customer details and contact history.</p>
             <Link href="/customers" className="btn btn-primary w-full">
               Back to Customers
             </Link>

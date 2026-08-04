@@ -3,10 +3,14 @@
 ## Prerequisites
 
 - Docker and Docker Compose installed
-- Node.js 18+ (for manual deployment)
+- Node.js 16+ for backend, Node.js 20+ for frontend (for manual deployment)
 - PostgreSQL 12+ (for manual deployment)
 - Nginx (for reverse proxy)
 - SSL certificates (Let's Encrypt recommended)
+
+## Azure Deployment
+
+For Azure-specific deployment, AKS manifests, and Application Insights configuration, see `docs/AZURE_DEPLOYMENT.md`.
 
 ## Docker Deployment (Recommended)
 
@@ -227,6 +231,13 @@ curl http://localhost:5000/health
 # Check database connection
 docker-compose exec backend npm run db:check
 ```
+
+## Validation
+This deployment configuration has been validated with the following checks:
+- `backend`: `npm run lint` and `npm test`
+- `frontend`: `npm run build`
+- `npm audit` returns `0 vulnerabilities` for both backend and frontend
+- Confirmed compatibility with Next.js `16.3.0` and Azure-ready deployment manifests
 
 ## Scaling Considerations
 

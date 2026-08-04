@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Plus, AlertTriangle, Edit, Trash2 } from 'lucide-react';
 import api from '../../lib/api';
@@ -13,26 +13,30 @@ export default function InventoryPage() {
   const [filterLowStock, setFilterLowStock] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const loadProducts = async (lowStock = false) => {
-    setLoading(true);
-    setErrorMessage('');
+  const loadProducts = useCallback(
+    async (lowStock = false) => {
+      setLoading(true);
+      setErrorMessage('');
 
-    try {
-      const response = await api.get('/api/inventory', {
-        params: lowStock ? { filter: 'low-stock' } : {}
-      });
-      setProducts(response.data.data || response.data);
-    } catch (err) {
-      setErrorMessage(err.response?.data?.error || 'Unable to load inventory.');
-      error(err.response?.data?.error || 'Unable to load inventory.');
-    } finally {
-      setLoading(false);
-    }
-  };
+      try {
+        const response = await api.get('/api/inventory', {
+          params: lowStock ? { filter: 'low-stock' } : {}
+        });
+        setProducts(response.data.data || response.data);
+      } catch (err) {
+        const message = err.response?.data?.error || 'Unable to load inventory.';
+        setErrorMessage(message);
+        error(message);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [error]
+  );
 
   useEffect(() => {
     loadProducts(filterLowStock);
-  }, [filterLowStock]);
+  }, [filterLowStock, loadProducts]);
 
   return (
     <div className="space-y-6">

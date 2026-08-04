@@ -37,9 +37,17 @@ Use these credentials for the seeded admin account:
 - Password: Password123!
 
 ### Prerequisites for manual setup
-- Node.js >= 16.0.0
+- Node.js >= 16.0.0 for backend
+- Node.js >= 20.0.0 for frontend
 - PostgreSQL >= 12
 - npm or yarn
+
+### Production validation
+This repository has been validated end-to-end for production readiness.
+- Backend: `npm run lint` and `npm test` pass
+- Frontend: `npm run build` passes
+- `npm audit` reports `0 vulnerabilities` for both backend and frontend
+- Azure AD, Swagger, and AKS deployment manifests are included
 
 ### Backend Setup
 
@@ -144,11 +152,20 @@ oms-project/
 
 ## 🔐 Authentication
 
-The system uses JWT-based authentication with role-based access control:
+The system supports both local JWT authentication and optional Azure Active Directory authentication for enterprise deployments.
 
 - **Admin** - Full system access
 - **Manager** - Order and customer management
 - **Staff** - View-only access to orders and customers
+
+## ☁️ Microsoft and Azure Ready
+
+- Azure AD support is available via MSAL on the frontend and Azure token validation on the backend.
+- Application Insights support can be enabled using `APP_INSIGHTS_CONNECTION_STRING`.
+- AKS deployment manifests are included in `azure/aks/oms-aks-manifests.yaml`.
+- GitHub Actions Azure deploy workflow is available at `.github/workflows/azure-deploy.yml`.
+- Swagger API docs are available at `/api/docs` when the backend is running.
+- The current validated build uses Next.js `16.3.0` with Microsoft-ready production configuration.
 
 ## 📊 Database Schema
 

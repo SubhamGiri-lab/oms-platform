@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import api from '../../lib/api';
 import { useNotification } from '../context/NotificationContext';
 
@@ -18,26 +18,29 @@ export default function DocumentsPage() {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const loadReport = async (report) => {
-    setLoading(true);
-    setErrorMessage('');
-    setReportData(null);
+  const loadReport = useCallback(
+    async (report) => {
+      setLoading(true);
+      setErrorMessage('');
+      setReportData(null);
 
-    try {
-      const response = await api.get(report.endpoint);
-      setReportData(response.data);
-    } catch (err) {
-      const message = err.response?.data?.error || 'Unable to load report.';
-      setErrorMessage(message);
-      error(message);
-    } finally {
-      setLoading(false);
-    }
-  };
+      try {
+        const response = await api.get(report.endpoint);
+        setReportData(response.data);
+      } catch (err) {
+        const message = err.response?.data?.error || 'Unable to load report.';
+        setErrorMessage(message);
+        error(message);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [error]
+  );
 
   useEffect(() => {
     loadReport(activeReport);
-  }, [activeReport]);
+  }, [activeReport, loadReport]);
 
   const downloadReport = () => {
     if (!reportData) return;

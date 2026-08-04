@@ -21,7 +21,8 @@ router.get('/', authorize(['admin']), async (req, res) => {
 
 // Get current user
 router.get('/me', async (req, res) => {
-  const { password, ...safeUser } = req.user.toJSON();
+  const safeUser = req.user.toJSON();
+  delete safeUser.password;
   res.json(safeUser);
 });
 
@@ -39,7 +40,9 @@ router.patch('/me', async (req, res) => {
     if (!user) return res.status(404).json({ error: 'User not found' });
 
     await user.update(updates);
-    const { password: removedPassword, ...safeUser } = user.toJSON();
+    const safeUser = user.toJSON();
+    delete safeUser.password;
+
     res.json({ message: 'Profile updated', user: safeUser });
   } catch (error) {
     res.status(500).json({ error: error.message });

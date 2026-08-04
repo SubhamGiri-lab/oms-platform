@@ -18,6 +18,7 @@ const io = new Server(httpServer, {
 });
 
 const { sequelize, User } = require('./models');
+const { connectWithRetry } = require('./db');
 const bcrypt = require('bcryptjs');
 
 const allowedOrigins = [process.env.FRONTEND_URL, 'http://localhost:3000', 'http://localhost:3001'].filter(Boolean);
@@ -39,6 +40,7 @@ app.use((req, res, next) => {
 });
 
 // Routes
+const { swaggerUi, swaggerSpec } = require('./swagger');
 const authRoutes = require('./routes/auth');
 const orderRoutes = require('./routes/orders');
 const customerRoutes = require('./routes/customers');
@@ -56,6 +58,8 @@ app.use('/api/analytics', analyticsRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/notifications', notificationRoutes);
 
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.json({ status: 'OK', timestamp: new Date().toISOString() });
@@ -71,6 +75,7 @@ app.use((req, res) => {
 
 // Error handling middleware
 app.use((err, req, res, next) => {
+  void next;
   console.error(err.stack);
   
   const status = err.status || 500;
@@ -123,6 +128,7 @@ const createAdminUser = async () => {
 
 const startServer = async () => {
   try {
+    await connectWithRetry();
     await sequelize.sync({ alter: true });
     console.log('✅ Database schema synced');
     await createAdminUser();

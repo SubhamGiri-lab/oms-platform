@@ -7,7 +7,7 @@ import { useAuth } from '../context/AuthContext';
 
 export default function LoginPage() {
   const router = useRouter();
-  const { login } = useAuth();
+  const { login, azureLogin, isAzureConfigured } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -24,6 +24,19 @@ export default function LoginPage() {
       router.push('/dashboard');
     } catch (err) {
       setError(err.response?.data?.error || 'Unable to login');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleAzureLogin = async () => {
+    try {
+      setError('');
+      setIsLoading(true);
+      await azureLogin();
+      router.push('/dashboard');
+    } catch (err) {
+      setError(err.message || 'Azure login failed');
     } finally {
       setIsLoading(false);
     }
@@ -71,6 +84,19 @@ export default function LoginPage() {
             {isLoading ? 'Signing in...' : 'Sign in'}
           </button>
         </form>
+
+        {isAzureConfigured && (
+          <div className="mt-4">
+            <button
+              type="button"
+              onClick={handleAzureLogin}
+              className="btn btn-secondary w-full"
+              disabled={isLoading}
+            >
+              {isLoading ? 'Signing in...' : 'Sign in with Microsoft'}
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

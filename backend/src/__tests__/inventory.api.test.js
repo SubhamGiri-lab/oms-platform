@@ -1,5 +1,5 @@
 process.env.NODE_ENV = 'test';
-process.env.DATABASE_URL = 'sqlite::memory:?cache=shared';
+delete process.env.DATABASE_URL;
 process.env.JWT_SECRET = 'test-secret';
 
 const request = require('supertest');
